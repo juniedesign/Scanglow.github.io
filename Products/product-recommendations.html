@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SCANGLOW 추천 제품 - AI가 분석한 당신의 피부 타입과 상태에 가장 적합한 스킨케어 제품을 만나보세요.">
+    <meta name="keywords" content="SCANGLOW, 맞춤형 제품 추천, 스킨케어 제품, 화장품 추천, AI 추천">
+    <title>SCANGLOW - 추천 제품</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colors */
+            --accent-100: #FF3C00;
+            --accent-115: #E63600;
+            --accent-5: rgba(255, 60, 0, 0.05);
+            --accent-10: rgba(255, 60, 0, 0.1);
+            --accent-20: rgba(255, 60, 0, 0.2);
+
+            --status-success: #22C55E;
+            --status-warning: #F59E0B;
+            --status-error: #EF4444;
+            --status-info: #3B82F6;
+
+            /* UI Colors */
+            --ui-background-primary: #FFFFFF;
+            --ui-background-secondary: #F8F9FA;
+            --ui-background-tertiary: #F3F4F6;
+            --ui-foreground-primary: #111827;
+            --ui-foreground-secondary: #4B5563;
+            --ui-foreground-tertiary: #9CA3AF;
+            --ui-border: #E5E7EB;
+            --ui-placeholder: #9CA3AF;
+
+            /* Typography */
+            --font-primary: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+
+            --line-height-none: 1;
+            --line-height-tight: 1.25;
+            --line-height-snug: 1.375;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.625;
+            --line-height-loose: 2;
+
+            /* Spacing */
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-5: 1.25rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+            --spacing-10: 2.5rem;
+            --spacing-12: 3rem;
+            --spacing-16: 4rem;
+
+            /* Border Radius */
+            --radius-sm: 0.125rem;
+            --radius-base: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --radius-2xl: 1rem;
+            --radius-3xl: 1.5rem;
+            --radius-full: 9999px;
+
+            /* Animations */
+            --transition-duration-fast: 150ms;
+            --transition-duration-normal: 200ms;
+            --transition-duration-slow: 300ms;
+            --transition-duration-slower: 500ms;
+            --transition-timing-ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: var(--line-height-normal);
+            color: var(--ui-foreground-primary);
+            background-color: var(--ui-background-secondary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: var(--spacing-8) var(--spacing-4);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Main Content */
+        .recommendations-header {
+            text-align: center;
+            margin-bottom: var(--spacing-8);
+        }
+
+        .recommendations-title {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--spacing-3);
+        }
+
+        .recommendations-description {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-lg);
+            line-height: var(--line-height-relaxed);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filter Section */
+        .filters {
+            background: var(--ui-background-primary);
+            padding: var(--spacing-6);
+            border-radius: var(--radius-2xl);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: var(--spacing-3);
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            padding: var(--spacing-3) var(--spacing-5);
+            border: 1px solid var(--ui-border);
+            border-radius: var(--radius-full);
+            background: var(--ui-background-primary);
+            color: var(--ui-foreground-primary);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .filter-button:hover {
+            background: var(--ui-background-secondary);
+            border-color: var(--accent-100);
+            color: var(--accent-100);
+        }
+
+        .filter-button.active {
+            background: var(--accent-5);
+            border-color: var(--accent-100);
+            color: var(--accent-100);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .product-card {
+            background: var(--ui-background-primary);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            background: var(--ui-background-tertiary);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+        }
+
+        .product-content {
+            padding: var(--spacing-6);
+        }
+
+        .product-brand {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--spacing-1);
+        }
+
+        .product-name {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            margin-bottom: var(--spacing-3);
+            line-height: var(--line-height-tight);
+        }
+
+        .product-benefits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-2);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .benefit-tag {
+            background: var(--accent-5);
+            color: var(--accent-100);
+            padding: var(--spacing-1) var(--spacing-3);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .rating-stars {
+            color: var(--status-warning);
+            font-size: var(--font-size-lg);
+        }
+
+        .rating-count {
+            color: var(--ui-foreground-tertiary);
+            font-size: var(--font-size-sm);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: var(--spacing-3);
+        }
+
+        .action-button {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-2);
+            padding: var(--spacing-3) var(--spacing-4);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-base);
+            cursor: pointer;
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .button-primary {
+            background: var(--accent-100);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: var(--accent-115);
+        }
+
+        .button-secondary {
+            background: var(--ui-background-secondary);
+            color: var(--ui-foreground-primary);
+            border: 1px solid var(--ui-border);
+        }
+
+        .button-secondary:hover {
+            background: var(--ui-background-tertiary);
+            border-color: var(--accent-100);
+            color: var(--accent-100);
+        }
+
+        /* Recommendation Explanation */
+        .recommendation-reason {
+            background: var(--accent-5);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+            text-align: center;
+        }
+
+        .reason-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--accent-100);
+            margin-bottom: var(--spacing-4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-3);
+        }
+
+        .reason-icon {
+            font-size: var(--font-size-2xl);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s var(--transition-timing-bounce) forwards;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: var(--spacing-6) var(--spacing-4);
+            }
+
+            .recommendations-title {
+                font-size: var(--font-size-2xl);
+            }
+
+            .recommendations-description {
+                font-size: var(--font-size-base);
+            }
+
+            .filters {
+                padding: var(--spacing-4);
+            }
+
+            .filter-group {
+                gap: var(--spacing-2);
+            }
+
+            .filter-button {
+                padding: var(--spacing-2) var(--spacing-4);
+                font-size: var(--font-size-sm);
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-4);
+            }
+
+            .product-card {
+                margin: 0 var(--spacing-4);
+            }
+
+            .product-content {
+                padding: var(--spacing-4);
+            }
+
+            .product-name {
+                font-size: var(--font-size-lg);
+            }
+
+            .action-button {
+                padding: var(--spacing-2) var(--spacing-3);
+                font-size: var(--font-size-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="recommendations-header animate-fade-in">
+            <h1 class="recommendations-title">AI가 분석한<br>맞춤 제품을 만나보세요</h1>
+            <p class="recommendations-description">
+                피부 타입과 현재 상태, 선호도를 고려해<br>
+                가장 적합한 제품을 추천해드려요
+            </p>
+        </div>
+
+        <div class="recommendation-reason animate-fade-in">
+            <div class="reason-title">
+                <span class="reason-icon">✨</span>
+                <span>서연님의 피부 분석 결과</span>
+            </div>
+            <p style="color: var(--ui-foreground-secondary); line-height: var(--line-height-relaxed);">
+                건조하고 민감한 피부 상태를 고려하여<br>
+                수분 공급과 진정 효과가 뛰어난 제품을 우선적으로 추천해드려요
+            </p>
+        </div>
+
+        <div class="filters animate-fade-in">
+            <div class="filter-group">
+                <button class="filter-button active">전체 보기</button>
+                <button class="filter-button">수분 보충</button>
+                <button class="filter-button">진정 케어</button>
+                <button class="filter-button">미백</button>
+                <button class="filter-button">주름 개선</button>
+                <button class="filter-button">모공 케어</button>
+            </div>
+        </div>
+
+        <div class="product-grid">
+            <!-- Product Card 1 -->
+            <div class="product-card animate-fade-in">
+                <img src="/assets/images/products/product-1.jpg" alt="" class="product-image">
+                <div class="product-content">
+                    <div class="product-brand">라로슈포제</div>
+                    <h2 class="product-name">시카플라스트 밤 B5</h2>
+                    <div class="product-benefits">
+                        <span class="benefit-tag">진정 케어</span>
+                        <span class="benefit-tag">수분 보충</span>
+                        <span class="benefit-tag">민감성</span>
+                    </div>
+                    <div class="product-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <span class="rating-count">리뷰 128개</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="action-button button-primary">
+                            <span style="font-size: var(--font-size-xl);">🔍</span>
+                            <span>자세히 보기</span>
+                        </button>
+                        <button class="action-button button-secondary">
+                            <span style="font-size: var(--font-size-xl);">♡</span>
+                            <span>저장</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 2 -->
+            <div class="product-card animate-fade-in">
+                <img src="/assets/images/products/product-2.jpg" alt="" class="product-image">
+                <div class="product-content">
+                    <div class="product-brand">아벤느</div>
+                    <h2 class="product-name">시칼파트 리페어 크림</h2>
+                    <div class="product-benefits">
+                        <span class="benefit-tag">진정 케어</span>
+                        <span class="benefit-tag">보습</span>
+                        <span class="benefit-tag">저자극</span>
+                    </div>
+                    <div class="product-rating">
+                        <div class="rating-stars">★★★★☆</div>
+                        <span class="rating-count">리뷰 96개</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="action-button button-primary">
+                            <span style="font-size: var(--font-size-xl);">🔍</span>
+                            <span>자세히 보기</span>
+                        </button>
+                        <button class="action-button button-secondary">
+                            <span style="font-size: var(--font-size-xl);">♡</span>
+                            <span>저장</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 3 -->
+            <div class="product-card animate-fade-in">
+                <img src="/assets/images/products/product-3.jpg" alt="" class="product-image">
+                <div class="product-content">
+                    <div class="product-brand">닥터지</div>
+                    <h2 class="product-name">레드 블레미쉬 수딩 크림</h2>
+                    <div class="product-benefits">
+                        <span class="benefit-tag">진정 케어</span>
+                        <span class="benefit-tag">수분 보충</span>
+                        <span class="benefit-tag">트러블</span>
+                    </div>
+                    <div class="product-rating">
+                        <div class="rating-stars">★★★★★</div>
+                        <span class="rating-count">리뷰 245개</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="action-button button-primary">
+                            <span style="font-size: var(--font-size-xl);">🔍</span>
+                            <span>자세히 보기</span>
+                        </button>
+                        <button class="action-button button-secondary">
+                            <span style="font-size: var(--font-size-xl);">♡</span>
+                            <span>저장</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter buttons
+        const filterButtons = document.querySelectorAll('.filter-button');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        // Save button functionality
+        const saveButtons = document.querySelectorAll('.button-secondary');
+        
+        saveButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const isSaved = button.querySelector('span:last-child').textContent === '저장됨';
+                const icon = button.querySelector('span:first-child');
+                const text = button.querySelector('span:last-child');
+                
+                if (isSaved) {
+                    icon.textContent = '♡';
+                    text.textContent = '저장';
+                    button.style.background = 'var(--ui-background-secondary)';
+                    button.style.color = 'var(--ui-foreground-primary)';
+                    button.style.borderColor = 'var(--ui-border)';
+                } else {
+                    icon.textContent = '♥';
+                    text.textContent = '저장됨';
+                    button.style.background = 'var(--accent-5)';
+                    button.style.color = 'var(--accent-100)';
+                    button.style.borderColor = 'var(--accent-100)';
+                }
+            });
+        });
+
+        // Product detail buttons
+        const detailButtons = document.querySelectorAll('.button-primary');
+        
+        detailButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // TODO: Implement navigation to product detail page
+                console.log('Navigate to product detail page');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>랜딩 페이지 - SKIN concierge</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css" rel="stylesheet">
+    <style>
+        /* IBM Design Language Icons */
+        .icon-svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        .icon-svg.small {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .icon-svg.large {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .icon-svg.xlarge {
+            width: 48px;
+            height: 48px;
+        }
+        
+        :root {
+            /* Colors */
+            --accent-100: #FF3C00;
+            --accent-115: #E63600;
+            --accent-5: rgba(255, 60, 0, 0.05);
+            --accent-10: rgba(255, 60, 0, 0.1);
+            --accent-20: rgba(255, 60, 0, 0.2);
+
+            --status-success: #22C55E;
+            --status-warning: #F59E0B;
+            --status-error: #EF4444;
+            --status-info: #3B82F6;
+
+            /* UI Colors */
+            --ui-background-primary: #FFFFFF;
+            --ui-background-secondary: #F8F9FA;
+            --ui-background-tertiary: #F3F4F6;
+            --ui-foreground-primary: #111827;
+            --ui-foreground-secondary: #4B5563;
+            --ui-foreground-tertiary: #9CA3AF;
+            --ui-border: #E5E7EB;
+            --ui-placeholder: #9CA3AF;
+
+            /* Typography */
+            --font-primary: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+
+            --line-height-none: 1;
+            --line-height-tight: 1.25;
+            --line-height-snug: 1.375;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.625;
+            --line-height-loose: 2;
+
+            /* Spacing */
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-5: 1.25rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+            --spacing-10: 2.5rem;
+            --spacing-12: 3rem;
+            --spacing-16: 4rem;
+
+            /* Border Radius */
+            --radius-sm: 0.125rem;
+            --radius-base: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --radius-2xl: 1rem;
+            --radius-3xl: 1.5rem;
+            --radius-full: 9999px;
+
+            /* Animations */
+            --transition-duration-fast: 150ms;
+            --transition-duration-normal: 200ms;
+            --transition-duration-slow: 300ms;
+            --transition-duration-slower: 500ms;
+            --transition-timing-ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: var(--line-height-normal);
+            color: var(--ui-foreground-primary);
+            background-color: var(--ui-background-primary);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-4);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--accent-5) 0%, var(--accent-10) 100%);
+            padding: var(--spacing-16) 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, var(--accent-5) 0%, transparent 70%);
+            opacity: 0.8;
+        }
+
+        .hero h1 {
+            font-size: var(--font-size-5xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--spacing-6);
+            position: relative;
+        }
+
+        .hero p {
+            font-size: var(--font-size-xl);
+            color: var(--ui-foreground-secondary);
+            margin-bottom: var(--spacing-8);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: var(--line-height-relaxed);
+            position: relative;
+        }
+
+        /* Features Section */
+        .features {
+            padding: var(--spacing-16) 0;
+            background-color: var(--ui-background-primary);
+        }
+
+        .features h2 {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            text-align: center;
+            margin-bottom: var(--spacing-12);
+            line-height: var(--line-height-tight);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-8);
+            margin-top: var(--spacing-12);
+        }
+
+        .feature-card {
+            background: var(--ui-background-secondary);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-8);
+            text-align: center;
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            background: var(--ui-background-tertiary);
+        }
+
+        .feature-card h3 {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            margin-bottom: var(--spacing-4);
+            line-height: var(--line-height-tight);
+        }
+
+        .feature-card p {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-relaxed);
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-4) var(--spacing-8);
+            border-radius: var(--radius-lg);
+            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-base);
+            text-decoration: none;
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+            position: relative;
+        }
+
+        .btn-primary {
+            background: var(--accent-100);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-115);
+        }
+
+        /* Social Proof Section */
+        .social-proof {
+            background-color: var(--ui-background-secondary);
+            padding: var(--spacing-16) 0;
+            text-align: center;
+        }
+
+        .social-proof h2 {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            margin-bottom: var(--spacing-4);
+            line-height: var(--line-height-tight);
+        }
+
+        .social-proof > p {
+            font-size: var(--font-size-lg);
+            color: var(--ui-foreground-secondary);
+            margin-bottom: var(--spacing-12);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-8);
+            margin-top: var(--spacing-12);
+        }
+
+        .testimonial-card {
+            background: var(--ui-background-primary);
+            padding: var(--spacing-8);
+            border-radius: var(--radius-2xl);
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .testimonial-card p {
+            color: var(--ui-foreground-primary);
+            font-size: var(--font-size-lg);
+            line-height: var(--line-height-relaxed);
+            font-weight: var(--font-weight-medium);
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--accent-100) 0%, var(--accent-115) 100%);
+            padding: var(--spacing-16) 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .cta h2 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-8);
+            line-height: var(--line-height-tight);
+            position: relative;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--accent-100);
+            margin-top: var(--spacing-8);
+            position: relative;
+        }
+
+        .cta .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--ui-background-secondary);
+            padding: var(--spacing-8) 0;
+            text-align: center;
+            border-top: 1px solid var(--ui-border);
+        }
+
+        .footer p {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-sm);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .footer a {
+            color: var(--accent-100);
+            text-decoration: none;
+            transition: color var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .footer a:hover {
+            color: var(--accent-115);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-6);
+            }
+
+            .hero {
+                padding: var(--spacing-12) 0;
+            }
+
+            .hero h1 {
+                font-size: var(--font-size-4xl);
+            }
+
+            .hero p {
+                font-size: var(--font-size-lg);
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-6);
+            }
+
+            .feature-card {
+                padding: var(--spacing-6);
+            }
+
+            .testimonials {
+                gap: var(--spacing-6);
+            }
+
+            .cta {
+                padding: var(--spacing-12) 0;
+            }
+
+            .cta h2 {
+                font-size: var(--font-size-3xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>AI 피부 진단으로<br>나만의 솔루션을 시작하세요</h1>
+            <p>
+                단 1분이면 내 피부 타입, 상태,<br>
+                가장 잘 맞는 뷰티 솔루션까지 한눈에 확인할 수 있어요
+            </p>
+            <a href="#" class="btn btn-primary">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <span style="margin-left: var(--spacing-2);">무료로 시작하기</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>
+                AI 기술로<br>
+                더 똑똑한 피부 관리를 시작하세요
+            </h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <svg class="icon-svg xlarge" viewBox="0 0 24 24" style="margin-bottom: var(--spacing-4); display: block;">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+                    </svg>
+                    <h3>1분 AI 진단</h3>
+                    <p>
+                        스마트폰 카메라로<br>
+                        즉시 피부 상태를 분석하고<br>
+                        과학적으로 진단받을 수 있어요
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <span style="font-size: var(--font-size-4xl); margin-bottom: var(--spacing-4); display: block;">🎯</span>
+                    <h3>맞춤 추천</h3>
+                    <p>
+                        내 피부와 선호도에 딱 맞는<br>
+                        제품과 솔루션을 전 세계<br>
+                        리뷰 데이터와 함께 추천해 드려요
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <svg class="icon-svg xlarge" viewBox="0 0 24 24" style="margin-bottom: var(--spacing-4); display: block;">
+                        <path d="M3 3v18h18M7 14l3-3 2 2 3-3 2 2"/>
+                    </svg>
+                    <h3>변화 추적</h3>
+                    <p>
+                        내 피부 변화 과정을 기록하고<br>
+                        개선 상황을 지속적으로<br>
+                        확인할 수 있어요
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <div class="container">
+            <h2>14,218명이 선택한<br>AI 피부 진단 서비스</h2>
+            <p>매번 어려웠던 피부 제품 선택,<br>이제는 AI가 도와드려요</p>
+            <div class="testimonials">
+                <div class="testimonial-card">
+                    <svg class="icon-svg xlarge" viewBox="0 0 24 24" style="margin-bottom: var(--spacing-4); display: block;">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <p>"매번 어떤 제품을 선택할지 고민이었는데, AI 추천으로 딱 맞는 제품을 찾았어요. 피부가 눈에 띄게 좋아졌어요!"</p>
+                    <div style="margin-top: var(--spacing-4); color: var(--ui-foreground-secondary); font-size: var(--font-size-sm);">
+                        김지영님 | 건성 피부
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <svg class="icon-svg xlarge" viewBox="0 0 24 24" style="margin-bottom: var(--spacing-4); display: block;">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <p>"피부 변화를 눈으로 직접 확인할 수 있어서 좋아요. 꾸준히 관리하게 되고 피부도 점점 좋아지는 게 느껴져요!"</p>
+                    <div style="margin-top: var(--spacing-4); color: var(--ui-foreground-secondary); font-size: var(--font-size-sm);">
+                        이민서님 | 복합성 피부
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>
+                지금 바로<br>
+                나만의 맞춤 피부 솔루션을<br>
+                시작해보세요
+            </h2>
+            <a href="#" class="btn">
+                <span style="font-size: var(--font-size-xl);">✨</span>
+                <span style="margin-left: var(--spacing-2);">무료로 시작하기</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>
+                <a href="/about">회사 소개</a> |
+                <a href="/privacy">개인정보 처리방침</a> |
+                <a href="mailto:info@skinconcierge.com">문의하기</a><br>
+                <span style="margin-top: var(--spacing-2); display: block;">© 2025 SKIN concierge. All rights reserved.</span>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

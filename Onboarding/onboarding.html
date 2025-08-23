@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SCANGLOW 온보딩 - 첫 피부 측정을 통해 당신만의 맞춤형 스킨케어 여정을 시작하세요.">
+    <meta name="keywords" content="SCANGLOW, 온보딩, 피부 측정, 초기 진단, 맞춤형 케어">
+    <title>SCANGLOW - 온보딩 및 피부 측정</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colors */
+            --accent-100: #FF3C00;
+            --accent-115: #E63600;
+            --accent-5: rgba(255, 60, 0, 0.05);
+            --accent-10: rgba(255, 60, 0, 0.1);
+            --accent-20: rgba(255, 60, 0, 0.2);
+
+            --status-success: #22C55E;
+            --status-warning: #F59E0B;
+            --status-error: #EF4444;
+            --status-info: #3B82F6;
+
+            /* UI Colors */
+            --ui-background-primary: #FFFFFF;
+            --ui-background-secondary: #F8F9FA;
+            --ui-background-tertiary: #F3F4F6;
+            --ui-foreground-primary: #111827;
+            --ui-foreground-secondary: #4B5563;
+            --ui-foreground-tertiary: #9CA3AF;
+            --ui-border: #E5E7EB;
+            --ui-placeholder: #9CA3AF;
+
+            /* Typography */
+            --font-primary: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+
+            --line-height-none: 1;
+            --line-height-tight: 1.25;
+            --line-height-snug: 1.375;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.625;
+            --line-height-loose: 2;
+
+            /* Spacing */
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-5: 1.25rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+            --spacing-10: 2.5rem;
+            --spacing-12: 3rem;
+            --spacing-16: 4rem;
+
+            /* Border Radius */
+            --radius-sm: 0.125rem;
+            --radius-base: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --radius-2xl: 1rem;
+            --radius-3xl: 1.5rem;
+            --radius-full: 9999px;
+
+            /* Animations */
+            --transition-duration-fast: 150ms;
+            --transition-duration-normal: 200ms;
+            --transition-duration-slow: 300ms;
+            --transition-duration-slower: 500ms;
+            --transition-timing-ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: var(--line-height-normal);
+            color: var(--ui-foreground-primary);
+            background-color: var(--ui-background-secondary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-8) var(--spacing-4);
+        }
+
+        /* Main Content */
+        .onboarding-container {
+            background: var(--ui-background-primary);
+            border-radius: var(--radius-2xl);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: var(--spacing-8);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .onboarding-header {
+            text-align: center;
+            margin-bottom: var(--spacing-8);
+        }
+
+        .onboarding-title {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--spacing-3);
+        }
+
+        .onboarding-description {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-lg);
+            line-height: var(--line-height-relaxed);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-8);
+            position: relative;
+            padding: 0 var(--spacing-8);
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: var(--spacing-16);
+            right: var(--spacing-16);
+            height: 2px;
+            background: var(--ui-border);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .progress-step {
+            position: relative;
+            z-index: 1;
+            background: var(--ui-background-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--ui-border);
+            color: var(--ui-foreground-tertiary);
+            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-lg);
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .progress-step.active {
+            background: var(--accent-100);
+            border-color: var(--accent-100);
+            color: white;
+        }
+
+        .progress-step.completed {
+            background: var(--status-success);
+            border-color: var(--status-success);
+            color: white;
+        }
+
+        .progress-label {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: var(--spacing-3);
+            white-space: nowrap;
+            font-size: var(--font-size-sm);
+            color: var(--ui-foreground-secondary);
+            font-weight: var(--font-weight-medium);
+        }
+
+        /* Step Content */
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+            animation: fadeIn var(--transition-duration-slow) var(--transition-timing-bounce);
+        }
+
+        .step-title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--spacing-6);
+            text-align: center;
+        }
+
+        /* Skin Concerns */
+        .concerns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .concern-item {
+            background: var(--ui-background-secondary);
+            border: 1px solid var(--ui-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-4);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .concern-item:hover {
+            transform: translateY(-2px);
+            background: var(--ui-background-tertiary);
+        }
+
+        .concern-item.selected {
+            background: var(--accent-5);
+            border-color: var(--accent-100);
+            color: var(--accent-100);
+        }
+
+        .concern-icon {
+            font-size: var(--font-size-3xl);
+            margin-bottom: var(--spacing-3);
+        }
+
+        /* Lifestyle Form */
+        .lifestyle-form {
+            display: grid;
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+            background: var(--ui-background-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-6);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-2);
+        }
+
+        .form-label {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .form-select {
+            padding: var(--spacing-4);
+            background: var(--ui-background-primary);
+            border: 1px solid var(--ui-border);
+            border-radius: var(--radius-lg);
+            font-family: var(--font-primary);
+            font-size: var(--font-size-base);
+            color: var(--ui-foreground-primary);
+            cursor: pointer;
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-100);
+            box-shadow: 0 0 0 2px var(--accent-20);
+        }
+
+        /* Scan Guide */
+        .scan-guide {
+            background: var(--accent-5);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .guide-title {
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-4);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            color: var(--accent-100);
+        }
+
+        .guide-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-100);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-lg);
+        }
+
+        .guide-list {
+            list-style: none;
+            margin-bottom: var(--spacing-4);
+        }
+
+        .guide-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            margin-bottom: var(--spacing-3);
+            color: var(--ui-foreground-primary);
+        }
+
+        .guide-item::before {
+            content: '✓';
+            color: var(--status-success);
+            font-weight: var(--font-weight-bold);
+        }
+
+        /* Navigation Buttons */
+        .step-buttons {
+            display: flex;
+            gap: var(--spacing-4);
+            margin-top: var(--spacing-8);
+        }
+
+        .button {
+            flex: 1;
+            padding: var(--spacing-4);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .button-primary {
+            background: var(--accent-100);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: var(--accent-115);
+        }
+
+        .button-secondary {
+            background: var(--ui-background-secondary);
+            color: var(--ui-foreground-primary);
+            border: 1px solid var(--ui-border);
+        }
+
+        .button-secondary:hover {
+            background: var(--ui-background-tertiary);
+        }
+
+        /* Help Section */
+        .help-section {
+            text-align: center;
+            margin-top: var(--spacing-8);
+            padding-top: var(--spacing-8);
+            border-top: 1px solid var(--ui-border);
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .help-link {
+            color: var(--accent-100);
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+            transition: color var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .help-link:hover {
+            color: var(--accent-115);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s var(--transition-timing-bounce) forwards;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .onboarding-container {
+                margin: 0 var(--spacing-4);
+                padding: var(--spacing-6);
+            }
+
+            .onboarding-title {
+                font-size: var(--font-size-2xl);
+            }
+
+            .onboarding-description {
+                font-size: var(--font-size-base);
+            }
+
+            .progress-bar {
+                padding: 0 var(--spacing-4);
+            }
+
+            .progress-bar::before {
+                left: var(--spacing-8);
+                right: var(--spacing-8);
+            }
+
+            .progress-step {
+                width: 32px;
+                height: 32px;
+                font-size: var(--font-size-base);
+            }
+
+            .concerns-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .step-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="onboarding-container animate-fade-in">
+        <div class="onboarding-header">
+            <h1 class="onboarding-title">AI 피부 진단으로<br>나만의 솔루션을 시작하세요</h1>
+            <p class="onboarding-description">
+                간단한 정보 입력으로<br>
+                맞춤형 스킨케어 여정을 시작하세요
+            </p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1">
+                1
+                <span class="progress-label">피부 고민</span>
+            </div>
+            <div class="progress-step" data-step="2">
+                2
+                <span class="progress-label">생활 습관</span>
+            </div>
+            <div class="progress-step" data-step="3">
+                3
+                <span class="progress-label">피부 스캔</span>
+            </div>
+        </div>
+
+        <!-- Step 1: Skin Concerns -->
+        <div class="step-content active" data-section="1">
+            <h2 class="step-title">
+                가장 신경 쓰이는<br>
+                피부 고민을 선택해 주세요
+            </h2>
+            <div class="concerns-grid">
+                <div class="concern-item">
+                    <div class="concern-icon">💧</div>
+                    <span>건조함</span>
+                </div>
+                <div class="concern-item">
+                    <div class="concern-icon">✨</div>
+                    <span>여드름</span>
+                </div>
+                <div class="concern-item">
+                    <div class="concern-icon">🌟</div>
+                    <span>주름</span>
+                </div>
+                <div class="concern-item">
+                    <div class="concern-icon">🌞</div>
+                    <span>민감성</span>
+                </div>
+                <div class="concern-item">
+                    <div class="concern-icon">⭐</div>
+                    <span>색소침착</span>
+                </div>
+                <div class="concern-item">
+                    <div class="concern-icon">🔍</div>
+                    <span>모공</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Lifestyle Information -->
+        <div class="step-content" data-section="2">
+            <h2 class="step-title">
+                생활 습관을 알려주시면<br>
+                더 정확한 솔루션을 제안해 드려요
+            </h2>
+            <form class="lifestyle-form">
+                <div class="form-group">
+                    <label for="sleepPattern" class="form-label">평균 수면 시간</label>
+                    <select id="sleepPattern" class="form-select">
+                        <option value="">선택해주세요</option>
+                        <option value="regular">6-8시간 (규칙적)</option>
+                        <option value="irregular">6-8시간 (불규칙)</option>
+                        <option value="insufficient">6시간 미만</option>
+                        <option value="excessive">8시간 초과</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stress" class="form-label">일상 스트레스 수준</label>
+                    <select id="stress" class="form-select">
+                        <option value="">선택해주세요</option>
+                        <option value="low">거의 없음</option>
+                        <option value="medium">보통</option>
+                        <option value="high">많음</option>
+                        <option value="very_high">매우 많음</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="skincare" class="form-label">현재 피부 관리 수준</label>
+                    <select id="skincare" class="form-select">
+                        <option value="">선택해주세요</option>
+                        <option value="basic">세안제와 수분크림만 사용</option>
+                        <option value="regular">기초 스킨케어 제품 사용</option>
+                        <option value="intensive">전문적인 관리 제품 사용</option>
+                        <option value="professional">전문가 관리 병행</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <!-- Step 3: Scan Guide -->
+        <div class="step-content" data-section="3">
+            <h2 class="step-title">
+                AI 피부 스캔으로<br>
+                정확한 진단을 시작해요
+            </h2>
+            <div class="scan-guide">
+                <div class="guide-title">
+                    <div class="guide-icon">📸</div>
+                    촬영 전 체크리스트
+                </div>
+                <ul class="guide-list">
+                    <li class="guide-item">자연광이나 밝은 조명 아래에서 촬영해주세요</li>
+                    <li class="guide-item">얼굴을 정면으로 향하고 정자세를 유지해주세요</li>
+                    <li class="guide-item">메이크업을 지운 맨 얼굴 상태로 촬영해주세요</li>
+                    <li class="guide-item">카메라와 얼굴 사이 거리는 30cm를 유지해주세요</li>
+                </ul>
+                <a href="#" class="help-link">
+                    <span style="font-size: var(--font-size-xl);">🎥</span>
+                    <span style="margin-left: var(--spacing-2);">촬영 가이드 영상 보기</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="step-buttons">
+            <button type="button" class="button button-secondary" id="prevButton" style="display: none;">이전</button>
+            <button type="button" class="button button-primary" id="nextButton">다음</button>
+        </div>
+
+        <div class="help-section">
+            <span style="font-size: var(--font-size-xl);">💬</span>
+            <p style="margin-top: var(--spacing-3);">
+                도움이 필요하신가요?<br>
+                <a href="/faq" class="help-link">자주 묻는 질문</a>에서 답을 찾아보세요
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Step navigation
+        let currentStep = 1;
+        const totalSteps = 3;
+        
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        
+        function updateButtons() {
+            prevButton.style.display = currentStep === 1 ? 'none' : 'block';
+            nextButton.textContent = currentStep === totalSteps ? '스캔 시작하기' : '다음';
+        }
+        
+        function updateProgress() {
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                const stepNum = index + 1;
+                step.classList.remove('active', 'completed');
+                if (stepNum === currentStep) {
+                    step.classList.add('active');
+                } else if (stepNum < currentStep) {
+                    step.classList.add('completed');
+                }
+            });
+        }
+        
+        function showStep(step) {
+            document.querySelectorAll('.step-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${step}"]`).classList.add('active');
+        }
+        
+        nextButton.addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+                updateProgress();
+                updateButtons();
+            } else {
+                // Redirect to scan page
+                window.location.href = '/scan';
+            }
+        });
+        
+        prevButton.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+                updateProgress();
+                updateButtons();
+            }
+        });
+        
+        // Skin concerns selection
+        const concernItems = document.querySelectorAll('.concern-item');
+        
+        concernItems.forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('selected');
+            });
+        });
+        
+        // Form validation
+        const lifestyleForm = document.querySelector('.lifestyle-form');
+        const formSelects = lifestyleForm.querySelectorAll('select');
+        
+        formSelects.forEach(select => {
+            select.addEventListener('change', () => {
+                const allFilled = Array.from(formSelects).every(select => select.value);
+                if (allFilled) {
+                    nextButton.removeAttribute('disabled');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        // Step navigation
+        let currentStep = 1;
+        const totalSteps = 3;
+        
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        
+        function updateButtons() {
+            prevButton.style.display = currentStep === 1 ? 'none' : 'block';
+            nextButton.textContent = currentStep === totalSteps ? '스캔 시작하기' : '다음';
+        }
+        
+        function updateProgress() {
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                const stepNum = index + 1;
+                step.classList.remove('active', 'completed');
+                if (stepNum === currentStep) {
+                    step.classList.add('active');
+                } else if (stepNum < currentStep) {
+                    step.classList.add('completed');
+                }
+            });
+        }
+        
+        function showStep(step) {
+            document.querySelectorAll('.step-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${step}"]`).classList.add('active');
+        }
+        
+        nextButton.addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+                updateProgress();
+                updateButtons();
+            } else {
+                // Redirect to scan page
+                window.location.href = '/scan';
+            }
+        });
+        
+        prevButton.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+                updateProgress();
+                updateButtons();
+            }
+        });
+        
+        // Skin concerns selection
+        const concernItems = document.querySelectorAll('.concern-item');
+        
+        concernItems.forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('selected');
+            });
+        });
+        
+        // Form validation
+        const lifestyleForm = document.querySelector('.lifestyle-form');
+        const formSelects = lifestyleForm.querySelectorAll('select');
+        
+        formSelects.forEach(select => {
+            select.addEventListener('change', () => {
+                const allFilled = Array.from(formSelects).every(select => select.value);
+                if (allFilled) {
+                    nextButton.removeAttribute('disabled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

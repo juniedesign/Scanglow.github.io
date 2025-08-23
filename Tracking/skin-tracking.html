@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SCANGLOW 피부 상태 추적 - 시간에 따른 피부 변화를 데이터로 확인하고 케어 효과를 분석하세요.">
+    <meta name="keywords" content="SCANGLOW, 피부 상태 추적, 피부 변화, 데이터 분석, 케어 효과">
+    <title>SCANGLOW - 피부 상태 추적 대시보드</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Design Tokens */
+        :root {
+            /* Colors */
+            --white: #FFFFFF;
+            --black: #000000;
+            --international-orange: #FF3C00;
+            --base-gray: #191919;
+
+            /* Ground Colors */
+            --ground-100: var(--white);
+            --ground-90: rgb(255 255 255 / 0.9);
+            --ground-80: rgb(255 255 255 / 0.8);
+            --ground-70: rgb(255 255 255 / 0.7);
+            --ground-60: rgb(255 255 255 / 0.6);
+            --ground-50: rgb(255 255 255 / 0.5);
+            --ground-40: rgb(255 255 255 / 0.4);
+            --ground-30: rgb(255 255 255 / 0.3);
+            --ground-20: rgb(255 255 255 / 0.2);
+            --ground-15: rgb(255 255 255 / 0.15);
+            --ground-10: rgb(255 255 255 / 0.1);
+            --ground-5: rgb(255 255 255 / 0.05);
+
+            /* Dark Colors */
+            --dark-120: #1A1A1A;
+            --dark-100: #191919;
+            --dark-90: rgb(25 25 25 / 0.9);
+            --dark-80: rgb(25 25 25 / 0.8);
+            --dark-70: rgb(25 25 25 / 0.7);
+            --dark-60: rgb(25 25 25 / 0.6);
+            --dark-50: rgb(25 25 25 / 0.5);
+            --dark-40: rgb(25 25 25 / 0.4);
+            --dark-30: rgb(25 25 25 / 0.3);
+            --dark-20: rgb(25 25 25 / 0.2);
+            --dark-10: rgb(25 25 25 / 0.1);
+            --dark-5: rgb(25 25 25 / 0.05);
+
+            /* Accent Colors */
+            --accent-115: #E53600;
+            --accent-100: #FF3C00;
+            --accent-90: rgb(255 60 0 / 0.9);
+            --accent-80: rgb(255 60 0 / 0.8);
+            --accent-70: rgb(255 60 0 / 0.7);
+            --accent-60: rgb(255 60 0 / 0.6);
+            --accent-50: rgb(255 60 0 / 0.5);
+            --accent-40: rgb(255 60 0 / 0.4);
+            --accent-30: rgb(255 60 0 / 0.3);
+            --accent-20: rgb(255 60 0 / 0.2);
+            --accent-10: rgb(255 60 0 / 0.1);
+            --accent-5: rgb(255 60 0 / 0.05);
+
+            /* Status Colors */
+            --status-error: #FF0000;
+            --status-warning: #FFA600;
+            --status-success: #6CCD5D;
+
+            /* UI Colors */
+            --ui-border: var(--dark-10);
+            --ui-dropdown-background: var(--white);
+            --ui-background-primary: var(--white);
+            --ui-background-secondary: #F9FAFB;
+            --ui-background-tertiary: #F2F2F2;
+            --ui-foreground-primary: var(--dark-100);
+            --ui-foreground-secondary: var(--dark-70);
+            --ui-foreground-tertiary: var(--dark-50);
+            --ui-wash: #F2F2F2;
+            --ui-placeholder: var(--dark-50);
+            --ui-outline: transparent;
+            --ui-image-background: #E9EAEB;
+            --ui-image-loading: #C3CCD0;
+            --ui-image-content: var(--dark-50);
+            --ui-overlay: var(--dark-50);
+
+            /* Typography */
+            --font-family-primary: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            --font-family-english: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            --font-family-monospace: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+            --font-size-xs: 0.8125rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 2rem;
+            --font-size-4xl: 2.5rem;
+            --font-size-5xl: 3rem;
+            --font-size-6xl: 4rem;
+
+            --font-weight-thin: 100;
+            --font-weight-light: 300;
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            --font-weight-black: 900;
+
+            --line-height-none: 1;
+            --line-height-tight: 1.25;
+            --line-height-snug: 1.375;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.625;
+            --line-height-loose: 2;
+
+            --letter-spacing-tighter: -0.05em;
+            --letter-spacing-tight: -0.025em;
+            --letter-spacing-normal: 0em;
+            --letter-spacing-wide: 0.025em;
+            --letter-spacing-wider: 0.05em;
+            --letter-spacing-widest: 0.1em;
+
+            /* Spacing */
+            --spacing-0: 0;
+            --spacing-px: 1px;
+            --spacing-0_5: 0.125rem;
+            --spacing-1: 0.25rem;
+            --spacing-1_5: 0.375rem;
+            --spacing-2: 0.5rem;
+            --spacing-2_5: 0.625rem;
+            --spacing-3: 0.75rem;
+            --spacing-3_5: 0.875rem;
+            --spacing-4: 1rem;
+            --spacing-5: 1.25rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+            --spacing-10: 2.5rem;
+            --spacing-12: 3rem;
+            --spacing-16: 4rem;
+
+            /* Border Radius */
+            --radius-none: 0;
+            --radius-sm: 0.125rem;
+            --radius-base: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --radius-2xl: 1rem;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+            /* Animations */
+            --animation-duration-base: 0.3s;
+            --animation-duration-smooth: 0.6s;
+            --animation-duration-bounce: 0.5s;
+
+            --animation-easing-base: ease;
+            --animation-easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --animation-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+            --animation-transition-fade: opacity var(--animation-duration-base) var(--animation-easing-base);
+            --animation-transition-scale: transform var(--animation-duration-smooth) var(--animation-easing-smooth);
+            --animation-transition-slide: transform var(--animation-duration-base) var(--animation-easing-base);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-primary);
+            line-height: var(--line-height-normal);
+            color: var(--ui-foreground-primary);
+            background-color: var(--ui-background-secondary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--ui-background-primary);
+            padding: var(--spacing-4) 0;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-4);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--accent-100);
+            text-decoration: none;
+            background: linear-gradient(135deg, var(--accent-100), var(--accent-115));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: var(--letter-spacing-tight);
+        }
+
+        .nav {
+            display: flex;
+            gap: var(--spacing-8);
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--ui-foreground-secondary);
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-base);
+            transition: var(--animation-transition-fade);
+            letter-spacing: var(--letter-spacing-wide);
+        }
+
+        .nav-link:hover {
+            color: var(--accent-100);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-4);
+        }
+
+        .icon-button {
+            background: none;
+            border: none;
+            padding: var(--spacing-2);
+            cursor: pointer;
+            color: var(--ui-foreground-secondary);
+            transition: var(--animation-transition-scale);
+            font-size: var(--font-size-xl);
+        }
+
+        .icon-button:hover {
+            color: var(--accent-100);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: var(--spacing-8) 0;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: var(--spacing-8);
+        }
+
+        .dashboard-title {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-4);
+            color: var(--ui-foreground-primary);
+            line-height: var(--line-height-tight);
+            letter-spacing: var(--letter-spacing-tight);
+        }
+
+        .dashboard-description {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-lg);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: var(--line-height-relaxed);
+            letter-spacing: var(--letter-spacing-wide);
+        }
+
+        /* Time Period Selector */
+        .time-selector {
+            background: var(--ui-background-primary);
+            padding: var(--spacing-4);
+            border-radius: var(--radius-2xl);
+            margin-bottom: var(--spacing-8);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-4);
+        }
+
+        .time-button {
+            padding: var(--spacing-2) var(--spacing-4);
+            border: 1px solid var(--ui-border);
+            border-radius: var(--radius-full);
+            background: var(--ui-background-primary);
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--animation-transition-scale);
+            letter-spacing: var(--letter-spacing-wide);
+        }
+
+        .time-button:hover,
+        .time-button.active {
+            background: var(--accent-10);
+            border-color: var(--accent-100);
+            color: var(--accent-100);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .dashboard-card {
+            background: var(--ui-background-primary);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-6);
+            box-shadow: var(--shadow-md);
+            transition: var(--animation-transition-scale);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-4);
+        }
+
+        .card-title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            letter-spacing: var(--letter-spacing-tight);
+            line-height: var(--line-height-tight);
+        }
+
+        .card-action {
+            color: var(--accent-100);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            transition: var(--animation-transition-fade);
+            letter-spacing: var(--letter-spacing-wide);
+        }
+
+        .card-action:hover {
+            color: var(--accent-115);
+            transform: translateX(4px);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            width: 100%;
+            height: 240px;
+            position: relative;
+            background-color: var(--ui-background-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-2);
+        }
+
+        /* Skin Score Card */
+        .skin-score {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 10px solid var(--accent-20);
+            background: linear-gradient(135deg, var(--accent-10), var(--accent-5));
+            margin: 0 auto var(--spacing-4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--accent-100);
+            box-shadow: 0 0 20px var(--accent-20);
+            position: relative;
+        }
+
+        .score-circle span {
+            background: linear-gradient(135deg, var(--accent-100), var(--accent-115));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .score-label {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-2);
+        }
+
+        .score-change {
+            color: var(--status-success);
+            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-base);
+        }
+
+        /* History List */
+        .history-list {
+            list-style: none;
+            background-color: var(--ui-background-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-4);
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-3);
+            background-color: var(--ui-background-primary);
+            border-radius: var(--radius-base);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .history-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .history-date {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        /* Recommendations */
+        .recommendations {
+            background-color: var(--ui-background-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-4);
+        }
+
+        .recommendation {
+            padding: var(--spacing-3);
+            background-color: var(--ui-background-primary);
+            border-radius: var(--radius-base);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-4);
+            border-left: 4px solid var(--accent-100);
+        }
+
+        .recommendation:last-child {
+            margin-bottom: 0;
+            border-left-color: var(--accent-80);
+        }
+
+        .recommendation-title {
+            color: var(--ui-foreground-primary);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-2);
+        }
+
+        .recommendation-text {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-base);
+        }
+
+        /* Action Button */
+        .action-button-container {
+            text-align: center;
+            margin-top: var(--spacing-8);
+            padding: var(--spacing-6);
+            background-color: var(--ui-background-primary);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-4) var(--spacing-8);
+            background: linear-gradient(135deg, var(--accent-100), var(--accent-115));
+            color: var(--ground-100);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: var(--animation-transition-scale);
+            text-decoration: none;
+            box-shadow: 0 4px 14px var(--accent-30);
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-40);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--ui-background-primary);
+            padding: var(--spacing-6) 0;
+            margin-top: auto;
+            border-top: 1px solid var(--ui-border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--spacing-6);
+        }
+
+        .footer-link {
+            color: var(--ui-foreground-secondary);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            transition: var(--animation-transition-fade);
+        }
+
+        .footer-link:hover {
+            color: var(--ui-foreground-primary);
+        }
+
+        .copyright {
+            color: var(--ui-foreground-tertiary);
+            font-size: var(--font-size-sm);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+
+            .dashboard-title {
+                font-size: 1.5rem;
+            }
+
+            .dashboard-description {
+                font-size: 1rem;
+            }
+
+            .time-selector {
+                flex-wrap: wrap;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: var(--spacing-4);
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: var(--spacing-2);
+            }
+        }
+
+        /* IBM Design Language Icons */
+        .icon-svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        .icon-svg.small {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .icon-svg.large {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .icon-svg.xlarge {
+            width: 48px;
+            height: 48px;
+        }
+        
+        /* Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--accent-100);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">메인 콘텐츠로 바로가기</a>
+
+    <header class="header">
+        <div class="container header-content">
+            <a href="/" class="logo">SCANGLOW</a>
+            <nav class="nav">
+                <a href="/dashboard" class="nav-link">대시보드</a>
+                <a href="/scan" class="nav-link">피부 스캔</a>
+                <a href="/products" class="nav-link">추천 제품</a>
+                <a href="/profile" class="nav-link">마이페이지</a>
+            </nav>
+            <div class="user-menu">
+                <button class="icon-button" aria-label="알림">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                </button>
+                <button class="icon-button" aria-label="설정">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                </button>
+                <button class="icon-button" aria-label="프로필">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="main">
+        <div class="container">
+            <div class="dashboard-header animate-fade-in">
+                <h1 class="dashboard-title">내 피부 변화, 한눈에 확인하세요</h1>
+                <p class="dashboard-description">AI가 분석한 피부 상태 변화와 개선 포인트를 추적합니다.</p>
+            </div>
+
+            <div class="time-selector animate-fade-in">
+                <button class="time-button active">일별</button>
+                <button class="time-button">주별</button>
+                <button class="time-button">월별</button>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Skin Score Card -->
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h2 class="card-title">피부 점수</h2>
+                        <a href="#" class="card-action">상세보기</a>
+                    </div>
+                    <div class="skin-score">
+                        <div class="score-circle">
+                            <span>85</span>
+                        </div>
+                        <div class="score-label">이전 대비</div>
+                        <div class="score-change">+5% 개선</div>
+                    </div>
+                </div>
+
+                <!-- Moisture Level Chart -->
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h2 class="card-title">수분 지수</h2>
+                        <a href="#" class="card-action">상세보기</a>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="moistureChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Skin History -->
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h2 class="card-title">피부 상태 히스토리</h2>
+                        <a href="#" class="card-action">전체보기</a>
+                    </div>
+                    <div class="history-list">
+                        <div class="history-item">
+                            <span>수분 지수 개선</span>
+                            <span class="history-date">2024.02.20</span>
+                        </div>
+                        <div class="history-item">
+                            <span>트러블 감소</span>
+                            <span class="history-date">2024.02.19</span>
+                        </div>
+                        <div class="history-item">
+                            <span>피부 톤 개선</span>
+                            <span class="history-date">2024.02.18</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h2 class="card-title">맞춤형 알림</h2>
+                    </div>
+                    <div class="recommendations">
+                        <div class="recommendation">
+                            <h3 class="recommendation-title">오늘의 피부 미션</h3>
+                            <p class="recommendation-text">수분크림 꼭꼭히 바르기</p>
+                        </div>
+                        <div class="recommendation">
+                            <h3 class="recommendation-title">최근 활동과 연동된 개인화 알림</h3>
+                            <p class="recommendation-text">피부 관리 팁 및 제품 추천</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-button-container">
+                <a href="/scan" class="action-button">
+                    새로운 스캔으로 피부 상태 갱신하기
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-links">
+                <a href="/about" class="footer-link">회사 소개</a>
+                <a href="/privacy" class="footer-link">개인정보 처리방침</a>
+                <a href="mailto:info@scanglow.com" class="footer-link">고객 문의</a>
+            </div>
+            <div class="copyright">© 2025 SCANGLOW</div>
+        </div>
+    </footer>
+
+    <script>
+        // Time period selector
+        const timeButtons = document.querySelectorAll('.time-button');
+        
+        timeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                timeButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                updateCharts(button.textContent);
+            });
+        });
+
+        // Chart initialization
+        const ctx = document.getElementById('moistureChart').getContext('2d');
+        const moistureChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2/14', '2/15', '2/16', '2/17', '2/18', '2/19', '2/20'],
+                datasets: [{
+                    label: '수분 지수',
+                    data: [65, 68, 70, 72, 75, 78, 80],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-100').trim(),
+                    backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-10').trim(),
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2,
+                    pointBackgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--ui-background-primary').trim(),
+                    pointBorderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-100').trim(),
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--ui-background-primary').trim(),
+                        titleColor: getComputedStyle(document.documentElement).getPropertyValue('--ui-foreground-primary').trim(),
+                        bodyColor: getComputedStyle(document.documentElement).getPropertyValue('--ui-foreground-secondary').trim(),
+                        borderColor: getComputedStyle(document.documentElement).getPropertyValue('--ui-border').trim(),
+                        borderWidth: 1,
+                        padding: 12,
+                        boxPadding: 6,
+                        usePointStyle: true,
+                        callbacks: {
+                            title: function(context) {
+                                return context[0].label + ' 기준';
+                            },
+                            label: function(context) {
+                                return '수분 지수: ' + context.raw;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--ui-border').trim(),
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--ui-foreground-secondary').trim(),
+                            font: {
+                                family: getComputedStyle(document.documentElement).getPropertyValue('--font-family-primary').trim(),
+                                size: 12
+                            },
+                            padding: 8
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--ui-foreground-secondary').trim(),
+                            font: {
+                                family: getComputedStyle(document.documentElement).getPropertyValue('--font-family-primary').trim(),
+                                size: 12
+                            },
+                            padding: 8
+                        }
+                    }
+                }
+            }
+        });
+
+        function updateCharts(period) {
+            // Update chart data based on selected time period
+            // This would typically fetch new data from an API
+            console.log(`Updating charts for ${period} view`);
+        }
+
+        // Intersection Observer for animation
+        const animateElements = document.querySelectorAll('.animate-fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        animateElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>

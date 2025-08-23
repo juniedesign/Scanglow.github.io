@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SCANGLOW 리뷰 - 사용자들의 실제 경험과 피드백을 통해 제품의 효과를 확인하세요.">
+    <meta name="keywords" content="SCANGLOW, 제품 리뷰, 사용자 평가, 스킨케어 후기, 제품 평가">
+    <title>SCANGLOW - 리뷰 요약 및 평가</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colors */
+            --accent-100: #FF3C00;
+            --accent-115: #E63600;
+            --accent-5: rgba(255, 60, 0, 0.05);
+            --accent-10: rgba(255, 60, 0, 0.1);
+            --accent-20: rgba(255, 60, 0, 0.2);
+
+            --status-success: #22C55E;
+            --status-warning: #F59E0B;
+            --status-error: #EF4444;
+            --status-info: #3B82F6;
+
+            /* UI Colors */
+            --ui-background-primary: #FFFFFF;
+            --ui-background-secondary: #F8F9FA;
+            --ui-background-tertiary: #F3F4F6;
+            --ui-foreground-primary: #111827;
+            --ui-foreground-secondary: #4B5563;
+            --ui-foreground-tertiary: #9CA3AF;
+            --ui-border: #E5E7EB;
+            --ui-placeholder: #9CA3AF;
+
+            /* Typography */
+            --font-primary: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+
+            --line-height-none: 1;
+            --line-height-tight: 1.25;
+            --line-height-snug: 1.375;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.625;
+            --line-height-loose: 2;
+
+            /* Spacing */
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-5: 1.25rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+            --spacing-10: 2.5rem;
+            --spacing-12: 3rem;
+            --spacing-16: 4rem;
+
+            /* Border Radius */
+            --radius-sm: 0.125rem;
+            --radius-base: 0.25rem;
+            --radius-md: 0.375rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --radius-2xl: 1rem;
+            --radius-3xl: 1.5rem;
+            --radius-full: 9999px;
+
+            /* Animations */
+            --transition-duration-fast: 150ms;
+            --transition-duration-normal: 200ms;
+            --transition-duration-slow: 300ms;
+            --transition-duration-slower: 500ms;
+            --transition-timing-ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: var(--line-height-normal);
+            color: var(--ui-foreground-primary);
+            background-color: var(--ui-background-secondary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: var(--spacing-8) var(--spacing-4);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Main Content */
+        .reviews-header {
+            text-align: center;
+            margin-bottom: var(--spacing-8);
+        }
+
+        .reviews-title {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--spacing-3);
+        }
+
+        .reviews-description {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-lg);
+            line-height: var(--line-height-relaxed);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Statistics Section */
+        .statistics {
+            background: var(--ui-background-primary);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-8);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .statistics-header {
+            text-align: center;
+            margin-bottom: var(--spacing-8);
+        }
+
+        .statistics-title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--ui-foreground-primary);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--spacing-2);
+        }
+
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-8);
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: var(--spacing-6);
+            background: var(--ui-background-secondary);
+            border-radius: var(--radius-xl);
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            background: var(--ui-background-tertiary);
+        }
+
+        .stat-value {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--accent-100);
+            margin-bottom: var(--spacing-2);
+            line-height: var(--line-height-none);
+        }
+
+        .stat-label {
+            color: var(--ui-foreground-secondary);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+        }
+
+        /* Filter Section */
+        .filters {
+            background: var(--ui-background-primary);
+            padding: var(--spacing-6);
+            border-radius: var(--radius-2xl);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: var(--spacing-3);
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            padding: var(--spacing-3) var(--spacing-5);
+            border: 1px solid var(--ui-border);
+            border-radius: var(--radius-full);
+            background: var(--ui-background-primary);
+            color: var(--ui-foreground-primary);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .filter-button:hover {
+            background: var(--ui-background-secondary);
+            border-color: var(--accent-100);
+            color: var(--accent-100);
+        }
+
+        .filter-button.active {
+            background: var(--accent-5);
+            border-color: var(--accent-100);
+            color: var(--accent-100);
+        }
+
+        /* Reviews Grid */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .review-card {
+            background: var(--ui-background-primary);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-6);
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .review-card:hover {
+            transform: translateY(-2px);
+            background: var(--ui-background-tertiary);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-4);
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+        }
+
+        .reviewer-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-full);
+            background: var(--accent-5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            color: var(--accent-100);
+        }
+
+        .reviewer-meta {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-1);
+        }
+
+        .reviewer-name {
+            font-weight: var(--font-weight-semibold);
+            color: var(--ui-foreground-primary);
+        }
+
+        .reviewer-type {
+            font-size: var(--font-size-sm);
+            color: var(--ui-foreground-secondary);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .review-rating {
+            color: var(--status-warning);
+            font-size: var(--font-size-lg);
+        }
+
+        .review-content {
+            margin-bottom: var(--spacing-4);
+        }
+
+        .review-text {
+            color: var(--ui-foreground-primary);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-relaxed);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .review-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-2);
+            margin-bottom: var(--spacing-4);
+        }
+
+        .review-tag {
+            padding: var(--spacing-1) var(--spacing-3);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .review-tag.positive {
+            background: var(--accent-5);
+            color: var(--accent-100);
+        }
+
+        .review-tag.negative {
+            background: rgba(239, 68, 68, 0.05);
+            color: var(--status-error);
+        }
+
+        .review-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--spacing-4);
+            border-top: 1px solid var(--ui-border);
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            color: var(--ui-foreground-secondary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+        }
+
+        .action-button:hover {
+            color: var(--accent-100);
+        }
+
+        .action-button.liked {
+            color: var(--accent-100);
+        }
+
+        /* Write Review Section */
+        .write-review {
+            background: var(--accent-5);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-8);
+            text-align: center;
+            margin-bottom: var(--spacing-8);
+        }
+
+        .write-review-title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--accent-100);
+            margin-bottom: var(--spacing-6);
+            line-height: var(--line-height-tight);
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-2);
+            padding: var(--spacing-4) var(--spacing-6);
+            border-radius: var(--radius-lg);
+            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-base);
+            cursor: pointer;
+            transition: all var(--transition-duration-normal) var(--transition-timing-ease);
+            text-decoration: none;
+        }
+
+        .button-primary {
+            background: var(--accent-100);
+            color: white;
+            border: none;
+        }
+
+        .button-primary:hover {
+            background: var(--accent-115);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s var(--transition-timing-bounce) forwards;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: var(--spacing-6) var(--spacing-4);
+            }
+
+            .reviews-title {
+                font-size: var(--font-size-2xl);
+            }
+
+            .reviews-description {
+                font-size: var(--font-size-base);
+            }
+
+            .statistics {
+                padding: var(--spacing-6);
+            }
+
+            .statistics-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-4);
+            }
+
+            .stat-card {
+                padding: var(--spacing-4);
+            }
+
+            .stat-value {
+                font-size: var(--font-size-3xl);
+            }
+
+            .filters {
+                padding: var(--spacing-4);
+            }
+
+            .filter-group {
+                gap: var(--spacing-2);
+            }
+
+            .filter-button {
+                padding: var(--spacing-2) var(--spacing-4);
+                font-size: var(--font-size-sm);
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-4);
+            }
+
+            .review-card {
+                padding: var(--spacing-4);
+            }
+
+            .write-review {
+                padding: var(--spacing-6);
+            }
+
+            .write-review-title {
+                font-size: var(--font-size-xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="reviews-header animate-fade-in">
+            <h1 class="reviews-title">실제 사용자의<br>솔직한 리뷰를 만나보세요</h1>
+            <p class="reviews-description">
+                AI가 분석한 14,218개의 리뷰 중<br>
+                가장 신뢰할 수 있는 리뷰만 모았어요
+            </p>
+        </div>
+
+        <div class="statistics animate-fade-in">
+            <div class="statistics-header">
+                <h2 class="statistics-title">시카플라스트 밤 B5<br>리뷰 요약</h2>
+            </div>
+            <div class="statistics-grid">
+                <div class="stat-card">
+                    <div class="stat-value">4.8</div>
+                    <div class="stat-label">평균 별점</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">89%</div>
+                    <div class="stat-label">긍정적 리뷰</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">95%</div>
+                    <div class="stat-label">재구매 의사</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">14,218</div>
+                    <div class="stat-label">전체 리뷰</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters animate-fade-in">
+            <div class="filter-group">
+                <button class="filter-button active">전체 보기</button>
+                <button class="filter-button">건성</button>
+                <button class="filter-button">지성</button>
+                <button class="filter-button">복합성</button>
+                <button class="filter-button">민감성</button>
+                <button class="filter-button">5점</button>
+                <button class="filter-button">4점</button>
+                <button class="filter-button">3점 이하</button>
+            </div>
+        </div>
+
+        <div class="reviews-grid">
+            <!-- Review Card 1 -->
+            <div class="review-card animate-fade-in">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">👩</div>
+                        <div class="reviewer-meta">
+                            <div class="reviewer-name">김서연</div>
+                            <div class="reviewer-type">건성 • 민감성</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">★★★★★</div>
+                </div>
+                <div class="review-content">
+                    <p class="review-text">2주 사용 후 확실히 피부가 촉촉해졌어요. 민감한 피부인데도 자극없이 잘 사용하고 있습니다. 특히 밤 타입이라 수분 잠금 효과가 뛰어나요.</p>
+                    <div class="review-tags">
+                        <span class="review-tag positive">수분감 좋음</span>
+                        <span class="review-tag positive">자극 없음</span>
+                        <span class="review-tag positive">흡수력 좋음</span>
+                    </div>
+                </div>
+                <div class="review-actions">
+                    <button class="action-button">
+                        <span>👍</span>
+                        <span>도움돼요</span>
+                        <span>(24)</span>
+                    </button>
+                    <button class="action-button">
+                        <span>💬</span>
+                        <span>댓글</span>
+                        <span>(3)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Review Card 2 -->
+            <div class="review-card animate-fade-in">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">👩</div>
+                        <div class="reviewer-meta">
+                            <div class="reviewer-name">이민지</div>
+                            <div class="reviewer-type">복합성 • 트러블</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">★★★★☆</div>
+                </div>
+                <div class="review-content">
+                    <p class="review-text">전반적으로 만족스러워요. 트러블 진정에도 효과가 있어서 좋았어요. 다만 여름철에는 조금 무거운 느낌이 있네요. 겨울철 사용 추천드립니다.</p>
+                    <div class="review-tags">
+                        <span class="review-tag positive">진정 효과</span>
+                        <span class="review-tag positive">보습력 우수</span>
+                        <span class="review-tag negative">약간 무거움</span>
+                    </div>
+                </div>
+                <div class="review-actions">
+                    <button class="action-button">
+                        <span>👍</span>
+                        <span>도움돼요</span>
+                        <span>(18)</span>
+                    </button>
+                    <button class="action-button">
+                        <span>💬</span>
+                        <span>댓글</span>
+                        <span>(2)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Review Card 3 -->
+            <div class="review-card animate-fade-in">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">👩</div>
+                        <div class="reviewer-meta">
+                            <div class="reviewer-name">박지현</div>
+                            <div class="reviewer-type">지성 • 민감성</div>
+                        </div>
+                    </div>
+                    <div class="review-rating">★★★★★</div>
+                </div>
+                <div class="review-content">
+                    <p class="review-text">기름진 피부인데도 산뜻하게 흡수되고 끈적임이 없어요. 여름철에도 부담없이 사용 가능합니다. 민감한 피부에도 자극이 없어서 좋아요.</p>
+                    <div class="review-tags">
+                        <span class="review-tag positive">산뜻함</span>
+                        <span class="review-tag positive">흡수 빠름</span>
+                        <span class="review-tag positive">자극 없음</span>
+                    </div>
+                </div>
+                <div class="review-actions">
+                    <button class="action-button">
+                        <span>👍</span>
+                        <span>도움돼요</span>
+                        <span>(31)</span>
+                    </button>
+                    <button class="action-button">
+                        <span>💬</span>
+                        <span>댓글</span>
+                        <span>(5)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="write-review animate-fade-in">
+            <span style="font-size: var(--font-size-xl);">✍️</span>
+            <h2 class="write-review-title">
+                이 제품을 사용해보셨나요?<br>
+                여러분의 소중한 경험을 공유해주세요
+            </h2>
+            <button class="button button-primary">
+                <span style="font-size: var(--font-size-xl);">✨</span>
+                <span>리뷰 작성하기</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Filter buttons
+        const filterButtons = document.querySelectorAll('.filter-button');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+
+        // Help button functionality
+        const helpButtons = document.querySelectorAll('.action-button');
+        
+        helpButtons.forEach(button => {
+            if (button.querySelector('span:nth-child(2)').textContent === '도움돼요') {
+                button.addEventListener('click', () => {
+                    const countSpan = button.querySelector('span:last-child');
+                    const currentCount = parseInt(countSpan.textContent.match(/\d+/)[0]);
+                    const isLiked = button.classList.contains('liked');
+                    
+                    if (isLiked) {
+                        countSpan.textContent = `(${currentCount - 1})`;
+                        button.classList.remove('liked');
+                    } else {
+                        countSpan.textContent = `(${currentCount + 1})`;
+                        button.classList.add('liked');
+                    }
+                });
+            }
+        });
+
+        // Intersection Observer for animation
+        const animateElements = document.querySelectorAll('.animate-fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        animateElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
