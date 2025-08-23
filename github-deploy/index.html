@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Deploy Adapter - 프로젝트 런처</title>
+    <meta name="description" content="GitHub Pages 및 Vercel을 통한 효율적인 배포 및 서빙을 위한 자동화된 가이드라인">
+    <link rel="icon" href="./public/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>🚀 GitHub Deploy Adapter</h1>
+                    <p>기존 프로젝트 UI/UX 100% 보존 + 자동 배포</p>
+                </div>
+                <nav class="nav">
+                    <a href="#projects" class="nav-link">프로젝트</a>
+                    <a href="#about" class="nav-link">소개</a>
+                    <a href="#status" class="nav-link">상태</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>기존 프로젝트를 웹 서비스로</h2>
+                    <p>개발한 코드를 수정하지 않고 GitHub Pages와 Vercel을 통해 즉시 배포하세요</p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="projectCount">0</span>
+                            <span class="stat-label">프로젝트</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="deployStatus">🟢</span>
+                            <span class="stat-label">배포 상태</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2 class="section-title">배포된 프로젝트</h2>
+                <div class="projects-grid" id="projectsGrid">
+                    <div class="loading">프로젝트 목록을 불러오는 중...</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title">GitHub Deploy Adapter란?</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🔒</div>
+                        <h3>원본 코드 보존</h3>
+                        <p>기존 프로젝트의 UI/UX 및 기능을 전혀 변경하지 않습니다</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <h3>자동 배포</h3>
+                        <p>GitHub 커밋 시 Vercel에서 자동으로 빌드 및 배포됩니다</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌐</div>
+                        <h3>다중 플랫폼</h3>
+                        <p>GitHub Pages와 Vercel을 동시에 지원합니다</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔄</div>
+                        <h3>SPA 라우팅</h3>
+                        <p>React, Vue, Svelte 등 SPA의 클라이언트 라우팅을 완벽 지원합니다</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="status" class="status">
+            <div class="container">
+                <h2 class="section-title">시스템 상태</h2>
+                <div class="status-grid">
+                    <div class="status-card">
+                        <h3>API 헬스체크</h3>
+                        <div class="status-indicator" id="healthStatus">확인 중...</div>
+                        <button class="btn btn-secondary" onclick="checkHealth()">상태 확인</button>
+                    </div>
+                    <div class="status-card">
+                        <h3>프록시 서비스</h3>
+                        <div class="status-indicator" id="proxyStatus">확인 중...</div>
+                        <button class="btn btn-secondary" onclick="checkProxy()">상태 확인</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 GitHub Deploy Adapter. 모든 프로젝트의 원본 코드는 보존됩니다.</p>
+        </div>
+    </footer>
+
+    <script src="./scripts/main.js"></script>
+</body>
+</html>

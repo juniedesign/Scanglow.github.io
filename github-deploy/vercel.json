@@ -1,0 +1,100 @@
+{
+  "version": 2,
+  "name": "github-deploy-adapter",
+  "public": true,
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": ".",
+  "installCommand": "npm install",
+  "framework": null,
+  "routes": [
+    {
+      "src": "^/api/health$",
+      "dest": "/api/health.js"
+    },
+    {
+      "src": "^/api/proxy/(.*)$",
+      "dest": "/api/proxy.js"
+    },
+    {
+      "src": "^/adapters/([^/]+)$",
+      "status": 301,
+      "headers": {
+        "Location": "/adapters/$1/"
+      }
+    },
+    {
+      "src": "^/adapters/([^/]+)/?(.*)$",
+      "dest": "/adapters/$1/$2"
+    },
+    {
+      "src": "^/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|map))$",
+      "dest": "/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "^/$",
+      "dest": "/index.html"
+    },
+    {
+      "src": "^(?!/api)(.*)$",
+      "dest": "/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "api/health.js": {
+      "maxDuration": 10
+    },
+    "api/proxy.js": {
+      "maxDuration": 30
+    }
+  },
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

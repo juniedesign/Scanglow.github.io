@@ -1,0 +1,14 @@
+{
+  "name": "github-deploy-adapter",
+  "private": true,
+  "scripts": {
+    "prepare": "bash ./scripts/prepare.sh",
+    "check": "bash ./scripts/check.sh",
+    "dev": "npx http-server -p 5173 -c-1 .",
+    "start": "npm run dev",
+    "vercel-build": "echo Build by prepare && npm run prepare"
+  },
+  "devDependencies": {}
+}
+
+

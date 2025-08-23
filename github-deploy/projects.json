@@ -1,0 +1,38 @@
+[
+  {
+    "name": "GitHub Deploy Adapter",
+    "path": "github-deploy",
+    "desc": "GitHub Pages 및 Vercel을 통한 효율적인 배포 및 서빙을 위한 자동화된 가이드라인",
+    "tags": ["deployment", "adapter", "automation"],
+    "type": "static",
+    "framework": null,
+    "status": "active"
+  },
+  {
+    "name": "샘플 React 앱",
+    "path": "sample-react-app",
+    "desc": "React로 개발된 샘플 SPA 애플리케이션 (SPA 라우팅 지원)",
+    "tags": ["react", "spa", "sample"],
+    "type": "spa",
+    "framework": "react",
+    "status": "demo"
+  },
+  {
+    "name": "샘플 Vue 앱",
+    "path": "sample-vue-app",
+    "desc": "Vue.js로 개발된 샘플 SPA 애플리케이션 (SPA 라우팅 지원)",
+    "tags": ["vue", "spa", "sample"],
+    "type": "spa",
+    "framework": "vue",
+    "status": "demo"
+  },
+  {
+    "name": "정적 웹사이트",
+    "path": "static-website",
+    "desc": "순수 HTML/CSS/JavaScript로 개발된 정적 웹사이트",
+    "tags": ["static", "html", "css"],
+    "type": "static",
+    "framework": null,
+    "status": "demo"
+  }
+]

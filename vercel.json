@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "name": "multi-project-launcher",
+  "public": true,
+  "routes": [
+    { "src": "^/api/health$", "dest": "/api/health.js" },
+    { "src": "^/api/proxy/(.*)$", "dest": "/api/proxy.js" },
+
+    { "src": "^/adapters/app1$", "status": 301, "headers": { "Location": "/adapters/app1/" } },
+    { "src": "^/adapters/app2$", "status": 301, "headers": { "Location": "/adapters/app2/" } },
+    { "src": "^/adapters/web1$", "status": 301, "headers": { "Location": "/adapters/web1/" } },
+    { "src": "^/adapters/web2$", "status": 301, "headers": { "Location": "/adapters/web2/" } },
+
+    { "src": "^/adapters/([^/]+)/?(.*)$", "dest": "/adapters/$1/$2" },
+
+    { "src": "^/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|map))$", "dest": "/$1",
+      "headers": { "Cache-Control": "public, max-age=31536000, immutable" } },
+
+    { "src": "^/$", "dest": "/index.html" },
+    { "src": "^(?!/api)(.*)$", "dest": "/$1" }
+  ],
+  "headers": [
+    { "source": "/(.*)", "headers": [
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+    ]}
+  ]
+}
+
+
