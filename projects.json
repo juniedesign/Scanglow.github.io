@@ -1,8 +1,0 @@
-[
-  { "name": "app1", "path": "app1", "desc": "앱1 - 기존 UI/UX 100% 보존" },
-  { "name": "app2", "path": "app2", "desc": "앱2 - 기존 UI/UX 100% 보존" },
-  { "name": "web1", "path": "web1", "desc": "웹1 - 정적/SPA 혼합" },
-  { "name": "web2", "path": "web2", "desc": "웹2 - 정적 사이트" }
-]
-
-
