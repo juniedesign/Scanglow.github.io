@@ -29,21 +29,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <!-- Fonts -->
+    <!-- Fonts with fallbacks -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#FF3C00">
-    <meta name="msapplication-TileColor" content="#FF3C00">
-    
-    <title>SKIN concierge - AI 피부 관리 서비스</title>
-    
-    <!-- Critical CSS for above-the-fold content -->
+    <!-- Font loading fallback -->
     <style>
+        /* Font loading fallback */
+        @font-face {
+            font-family: 'Pretendard Fallback';
+            src: local('Arial'), local('Helvetica'), local('sans-serif');
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Lato Fallback';
+            src: local('Arial'), local('Helvetica'), local('sans-serif');
+            font-display: swap;
+        }
+        
         /* Critical CSS for initial render */
         :root {
             --accent-100: #FF3C00;
@@ -58,7 +64,7 @@
         }
         
         body {
-            font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            font-family: 'Pretendard Variable', 'Pretendard Fallback', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
             line-height: 1.5;
             color: var(--dark-100);
             background-color: var(--white);
@@ -99,6 +105,18 @@
             transition: opacity 0.3s ease-out;
         }
     </style>
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#FF3C00">
+    <meta name="msapplication-TileColor" content="#FF3C00">
+    
+    <title>SKIN concierge - AI 피부 관리 서비스</title>
+    
+    <!-- Critical CSS for above-the-fold content -->
+    
 </head>
 <body>
     <noscript>
